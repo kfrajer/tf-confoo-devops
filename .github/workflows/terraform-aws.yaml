@@ -84,7 +84,7 @@ jobs:
 
       - name: Check connection to lambda
         run: |
-          export GATEWAY_URL="$(jq -r '.my_gateway_url.value' ./terraform/terraform_output.json)/info"
+          export GATEWAY_URL="$(jq -r '.my_gateway_url.value' ./terraform_output.json)/info"
           echo "curl the lambda through the api gateway: $GATEWAY_URL"
           STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" $GATEWAY_URL)
           if [ "$STATUSCODE" -ne 200 ]; then
