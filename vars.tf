@@ -12,6 +12,12 @@ variable "ENV_NAME" {
   description = "The environment name: dev, qa, prod, etc"
 }
 
+variable "AWS_REGION" {
+  type        = string
+  description = "The AWS region to deploy this project"
+  default     = "us-west-2"
+}
+
 variable "LAMBDA_ZIP_FILE" {
   type        = string
   description = "The zip file containing the lambda function"
