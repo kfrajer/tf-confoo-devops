@@ -93,10 +93,10 @@ jobs:
 
       #Github Marketplace: Upload a Build Artifact
       - name: Upload a Build Artifact
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4.6.1
         with:
           name: "tfout artifact"
           path: "./terraform_output.json"
-          if: ${{ always() }}
 
           
