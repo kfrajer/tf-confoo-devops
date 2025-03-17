@@ -51,7 +51,6 @@ jobs:
 
       - name: Build & Deploy
         run: |
-          # cd terraform
           # Build terraform.tfvars file
           echo "tags = {" > terraform.tfvars
           echo "  \"project\" = \"terraform-workshop\"" >> terraform.tfvars
@@ -75,8 +74,7 @@ jobs:
           unset TF_LOG # disable terraform debug logs that interfere with terraform output
           terraform output -json > terraform_output.json
 
-          # cd ..
-          export GATEWAY_URL="$(jq -r '.my_gateway_url.value' ./terraform/terraform_output.json)/health"
+          export GATEWAY_URL="$(jq -r '.my_gateway_url.value' ./terraform_output.json)/health"
           echo "curl the lambda through the api gateway: $GATEWAY_URL"
           STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" $GATEWAY_URL)
           if [ "$STATUSCODE" -ne 200 ]; then
