@@ -91,6 +91,18 @@ jobs:
             exit "$STATUSCODE"
           fi
 
+      - name: Destroy steps
+        run: |
+          echo "tags = {" > terraform.tfvars
+          echo "  \"project\" = \"terraform-workshop\"" >> terraform.tfvars
+          echo "  \"env\"     = \"$ENV_NAME\"" >> terraform.tfvars
+          echo "}" >> terraform.tfvars
+          echo "ENV_NAME = \"$ENV_NAME\"" >> terraform.tfvars
+          echo "LAMBDA_ZIP_FILE = \"./artifacts/python_app.zip\"" >> terraform.tfvars # relative to Terraform folder
+          echo "AWS_REGION = \"${{ vars.AWS_REGION }}\"" >> terraform.tfvars
+          [ "${{ vars.DESTROY_FLAG }}" = 1 ] && echo "Destroy will be done!" || echo "Skipping destroying..."
+          [ "${{ vars.DESTROY_FLAG }}" = 1 ] && terraform destroy --auto-approve --var-file="terraform.tfvars"
+
       #Github Marketplace: Upload a Build Artifact
       - name: Upload a Build Artifact
         if: ${{ always() }}
