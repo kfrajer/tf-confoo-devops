@@ -97,6 +97,6 @@ jobs:
         with:
           name: "tfout artifact"
           path: "./terraform_output.json"
-          if: always()
+          if: ${{ always() }}
 
           
